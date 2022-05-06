@@ -8,6 +8,6 @@ package paint.models;
  *
  * @author remi
  */
-public enum Tool {
-    
+public enum Tool {    
+    CHOOSER, ROUND, SQUARE;
 }

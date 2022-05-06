@@ -14,9 +14,35 @@ public class Paint {
     private int y;
     private int width;
     private boolean smooth;
-    
-    public Paint(){
-        
+    private Tool tool;
+
+    public Paint(int x, int y, int width, boolean smooth, Color color, Tool tool) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.smooth = smooth;
+        this.color = color;
+        this.tool = tool;  
     }
-    
+
+    //getters
+    public Color getColor() {
+        return color;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public boolean isSmooth() {
+        return smooth;
+    }    
 }

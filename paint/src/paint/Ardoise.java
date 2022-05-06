@@ -4,11 +4,15 @@
  */
 package paint;
 
+import java.awt.Color;
+import java.awt.Point;
+import paint.models.Tool;
+
 /**
  *
  * @author remi
  */
-public class Ardoise extends javax.swing.JFrame {
+public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
     /**
      * Creates new form Ardoise
@@ -26,21 +30,179 @@ public class Ardoise extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        mainPanel = new javax.swing.JPanel();
+        controlPanel = new javax.swing.JPanel();
+        colorPanel = new javax.swing.JPanel();
+        CHOOSER = new javax.swing.JToggleButton();
+        ROUND = new javax.swing.JToggleButton();
+        SQUARE = new javax.swing.JToggleButton();
+        propertiesPanel = new javax.swing.JPanel();
+        width = new javax.swing.JSpinner();
+        checkBoxLisser = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        nouveauMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        ouvrirMenuItem = new javax.swing.JMenuItem();
+        enregistrerMenuItem = new javax.swing.JMenuItem();
+        enregistrer_sousMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        quitterMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Paint");
+        setPreferredSize(new java.awt.Dimension(600, 600));
+
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
+
+        colorPanel.setBackground(new java.awt.Color(255, 0, 0));
+        colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+
+        javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
+        colorPanel.setLayout(colorPanelLayout);
+        colorPanelLayout.setHorizontalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 123, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        colorPanelLayout.setVerticalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 112, Short.MAX_VALUE)
         );
+
+        CHOOSER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aaa.png"))); // NOI18N
+
+        ROUND.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aab.png"))); // NOI18N
+
+        SQUARE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aac.png"))); // NOI18N
+
+        propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
+
+        checkBoxLisser.setText("Lisser");
+        checkBoxLisser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxLisserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout propertiesPanelLayout = new javax.swing.GroupLayout(propertiesPanel);
+        propertiesPanel.setLayout(propertiesPanelLayout);
+        propertiesPanelLayout.setHorizontalGroup(
+            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, propertiesPanelLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(checkBoxLisser, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(width))
+                .addGap(29, 29, 29))
+        );
+        propertiesPanelLayout.setVerticalGroup(
+            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(propertiesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(width, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(checkBoxLisser)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(controlPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(CHOOSER, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ROUND, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SQUARE, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                        .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        controlPanelLayout.setVerticalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CHOOSER)
+                    .addComponent(ROUND)
+                    .addComponent(SQUARE, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(controlPanel, java.awt.BorderLayout.EAST);
+
+        jScrollPane1.setViewportView(jPanel1);
+
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jMenu1.setText("File");
+
+        nouveauMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        nouveauMenuItem.setText("Nouveau");
+        jMenu1.add(nouveauMenuItem);
+        jMenu1.add(jSeparator2);
+
+        ouvrirMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ouvrirMenuItem.setText("Ouvrir");
+        ouvrirMenuItem.setEnabled(false);
+        jMenu1.add(ouvrirMenuItem);
+
+        enregistrerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        enregistrerMenuItem.setText("Enregistrer");
+        enregistrerMenuItem.setEnabled(false);
+        jMenu1.add(enregistrerMenuItem);
+
+        enregistrer_sousMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        enregistrer_sousMenuItem.setText("Enregistrer sous");
+        enregistrer_sousMenuItem.setEnabled(false);
+        jMenu1.add(enregistrer_sousMenuItem);
+        jMenu1.add(jSeparator1);
+
+        quitterMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        quitterMenuItem.setText("Quitter");
+        quitterMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitterMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(quitterMenuItem);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenu2.setEnabled(false);
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void checkBoxLisserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxLisserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBoxLisserActionPerformed
+
+    private void quitterMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitterMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_quitterMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +241,51 @@ public class Ardoise extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton CHOOSER;
+    private javax.swing.JToggleButton ROUND;
+    private javax.swing.JToggleButton SQUARE;
+    private javax.swing.JCheckBox checkBoxLisser;
+    private javax.swing.JPanel colorPanel;
+    private javax.swing.JPanel controlPanel;
+    private javax.swing.JMenuItem enregistrerMenuItem;
+    private javax.swing.JMenuItem enregistrer_sousMenuItem;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JMenuItem nouveauMenuItem;
+    private javax.swing.JMenuItem ouvrirMenuItem;
+    private javax.swing.JPanel propertiesPanel;
+    private javax.swing.JMenuItem quitterMenuItem;
+    private javax.swing.JSpinner width;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public Color getSlateColor() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Tool getSlateTool() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean isSlateSmooth() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void newColorChoosen(Color color) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void newMousePosition(Point point) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
