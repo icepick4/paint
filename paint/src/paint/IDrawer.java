@@ -17,4 +17,5 @@ public interface IDrawer {
     public boolean isSlateSmooth();
     public void newColorChoosen(Color color);
     public void newMousePosition(Point point);
+    public int getSlateWidth();
 }

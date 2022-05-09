@@ -30,6 +30,10 @@ public class Paint {
         return color;
     }
 
+    public Tool getTool() {
+        return tool;
+    }
+
     public int getX() {
         return x;
     }
