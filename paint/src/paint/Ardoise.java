@@ -7,7 +7,9 @@ package paint;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Component;
 
+import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -118,19 +120,37 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         );
 
         CHOOSER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aaa.png"))); // NOI18N
+        CHOOSER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CHOOSERActionPerformed(evt);
+            }
+        });
 
         ROUND.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aab.png"))); // NOI18N
+        ROUND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ROUNDActionPerformed(evt);
+            }
+        });
 
         SQUARE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aac.png"))); // NOI18N
+        SQUARE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SQUAREActionPerformed(evt);
+            }
+        });
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(CHOOSER);
+        buttonGroup.add(ROUND);
+        buttonGroup.add(SQUARE);
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
+        width.setModel(new javax.swing.SpinnerNumberModel(1, 1, 50, 1));
+        width.setValue(1);
+
         checkBoxLisser.setText("Lisser");
-        checkBoxLisser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBoxLisserActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Px");
 
@@ -251,10 +271,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkBoxLisserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxLisserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkBoxLisserActionPerformed
-
     private void quitterMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitterMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitterMenuItemActionPerformed
@@ -271,7 +287,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             //ajouter le slate au jpanel
             jPanel1.add(slate);
             //mettre à jour la fenêtre
-            jPanel1.updateUI();
             slate.addMouseListener(slate);
             slate.addMouseMotionListener(slate);
             jPanel1.revalidate();
@@ -285,10 +300,53 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         
     }//GEN-LAST:event_colorPanelMouseClicked
 
+    private void CHOOSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
+        //for all components in the panel disable them
+        if (CHOOSER.isSelected()) {
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(false);
+            }
+        }
+        else{
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_CHOOSERActionPerformed
+
+    private void ROUNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
+        //for all components in the panel disable them
+        if (CHOOSER.isSelected()) {
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(false);
+            }
+        }
+        else{
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(true);
+            }
+        }
+    }
+
+    private void SQUAREActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
+        //for all components in the panel disable them
+        if (CHOOSER.isSelected()) {
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(false);
+            }
+        }
+        else{
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(true);
+            }
+        }
+    }
+
     private void jColorChooser1ActionPerformed(ChangeEvent evt) {                                                
         //set the font color
         this.colorPanel.setBackground(jColorChooser1.getColor());
     }
+
 
     /**
      * @param args the command line arguments

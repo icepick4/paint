@@ -64,11 +64,12 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
     public void mouseDragged(MouseEvent e) {
         int x = e.getX() - this.drawer.getSlateWidth() / 2;
         int y = e.getY() - this.drawer.getSlateWidth() / 2;
-        //create an object Paint smooth is the value of the checkbox smooth
-        Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
+        
         //add it to the list
         //if the tool is not chooser then add it to the list
         if (this.drawer.getSlateTool() != Tool.CHOOSER && this.drawer.getSlateTool() != null) {
+            //create an object Paint smooth is the value of the checkbox smooth
+            Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
             this.points.add(point);
         }
         this.repaint();
