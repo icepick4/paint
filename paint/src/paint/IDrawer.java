@@ -9,7 +9,7 @@ import java.awt.Point;
 import paint.models.Tool;
 /**
  *
- * @author remi
+ * @author Rémi JARA
  */
 public abstract interface IDrawer {
     public abstract Color getSlateColor();

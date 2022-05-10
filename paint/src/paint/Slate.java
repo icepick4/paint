@@ -3,21 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package paint;
-import java.awt.Dimension;
+
 import java.util.ArrayList;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
+import java.awt.Color;
+
 import paint.models.Paint;
 import paint.models.Tool;
 
-import java.awt.Color;
 
 /**
  *
- * @author remi
+ * @author Rémi JARA
  */
 public class Slate extends javax.swing.JPanel implements MouseMotionListener, MouseListener{
     private Dimension dimension;
@@ -25,11 +28,11 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
     private ArrayList<Paint> points;
     
     public Slate(Dimension dimension, IDrawer drawer) {
+        this.drawer = drawer;
         this.dimension = dimension;
-        //set size
+        //set sizes
         super.setSize(dimension);
         super.setPreferredSize(dimension);
-        this.drawer = drawer;
         //this list contains all the point of the canvas
         this.points = new ArrayList<Paint>();
     }
@@ -100,10 +103,7 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
             this.points.add(point);
         }
-        //if the point is not found, change the color
-        
         this.repaint();
-
     }
 
     @Override   

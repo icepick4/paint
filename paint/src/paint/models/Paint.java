@@ -6,7 +6,7 @@ package paint.models;
 import java.awt.Color;
 /**
  *
- * @author remi
+ * @author Rémi JARA
  */
 public class Paint {
     private Color color;

@@ -6,7 +6,7 @@ package paint.models;
 
 /**
  *
- * @author remi
+ * @author Rémi JARA
  */
 public enum Tool {    
     CHOOSER, ROUND, SQUARE;
