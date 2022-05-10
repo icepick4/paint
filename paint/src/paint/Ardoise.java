@@ -24,7 +24,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
      * Creates new form Ardoise
      */
     public Ardoise() {
-        initComponents();
+        this.initComponents();
     }
 
     /**
