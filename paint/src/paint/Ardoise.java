@@ -10,14 +10,13 @@ import java.awt.Point;
 import java.awt.Component;
 
 import javax.swing.ButtonGroup;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JColorChooser;
 
 import paint.models.Tool;
 
 /**
  *
- * @author remi
+ * @author Rémi JARA
  */
 public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
@@ -35,9 +34,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jFrame1 = new javax.swing.JFrame();
-        jColorChooser1 = new javax.swing.JColorChooser();
         mainPanel = new javax.swing.JPanel();
         controlPanel = new javax.swing.JPanel();
         colorPanel = new javax.swing.JPanel();
@@ -49,7 +45,8 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         checkBoxLisser = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        basePanel = new javax.swing.JPanel();
+        statusBar = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         nouveauMenuItem = new javax.swing.JMenuItem();
@@ -60,37 +57,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         quitterMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-
-        jFrame1.setTitle("Choisissez votre couleur");
-
-        jColorChooser1.setColor(new java.awt.Color(0, 0, 0));
-        jColorChooser1.getSelectionModel().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                jColorChooser1ActionPerformed(e);
-            }
-        });
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jFrame1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jFrame1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Paint");
@@ -139,7 +105,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 SQUAREActionPerformed(evt);
             }
         });
-
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(CHOOSER);
         buttonGroup.add(ROUND);
@@ -147,8 +112,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
-        width.setModel(new javax.swing.SpinnerNumberModel(1, 1, 50, 1));
-        width.setValue(1);
+        width.setModel(new javax.swing.SpinnerNumberModel(5, 1, 50, 1));
 
         checkBoxLisser.setText("Lisser");
 
@@ -213,15 +177,17 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                     .addComponent(CHOOSER))
                 .addGap(18, 18, 18)
                 .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.EAST);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(50, 50));
-        jScrollPane1.setViewportView(jPanel1);
+        basePanel.setBackground(new java.awt.Color(102, 102, 102));
+        basePanel.setPreferredSize(null);
+        jScrollPane1.setViewportView(basePanel);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(statusBar, java.awt.BorderLayout.SOUTH);
 
         jMenu1.setText("File");
 
@@ -283,21 +249,21 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         //si la dimension est diférente de null
         if (dimension != null) {
             Slate slate = new Slate(dimension, this);
-            jPanel1.setPreferredSize(dimension);
+            basePanel.setPreferredSize(dimension);
             //ajouter le slate au jpanel
-            jPanel1.add(slate);
+            basePanel.add(slate);
             //mettre à jour la fenêtre
             slate.addMouseListener(slate);
             slate.addMouseMotionListener(slate);
-            jPanel1.revalidate();
+            basePanel.revalidate();
         }
     }//GEN-LAST:event_nouveauMenuItemActionPerformed
 
     private void colorPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorPanelMouseClicked
-        jFrame1.pack();
-        jFrame1.setLocationRelativeTo(null);
-        jFrame1.setVisible(true);
-        
+        Color background = JColorChooser.showDialog(null, "Choisissez votre couleur", this.colorPanel.getBackground());
+        if (background != null) {
+            this.colorPanel.setBackground(background);
+        }
     }//GEN-LAST:event_colorPanelMouseClicked
 
     private void CHOOSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
@@ -314,7 +280,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }//GEN-LAST:event_CHOOSERActionPerformed
 
-    private void ROUNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
+    private void ROUNDActionPerformed(java.awt.event.ActionEvent evt) {                                        
         //for all components in the panel disable them
         if (CHOOSER.isSelected()) {
             for (Component component : propertiesPanel.getComponents()) {
@@ -328,8 +294,8 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
-    private void SQUAREActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
-        //for all components in the panel disable them
+    private void SQUAREActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        //for all components in the panel disable them is chooser selected
         if (CHOOSER.isSelected()) {
             for (Component component : propertiesPanel.getComponents()) {
                 component.setEnabled(false);
@@ -341,12 +307,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             }
         }
     }
-
-    private void jColorChooser1ActionPerformed(ChangeEvent evt) {                                                
-        //set the font color
-        this.colorPanel.setBackground(jColorChooser1.getColor());
-    }
-
 
     /**
      * @param args the command line arguments
@@ -388,18 +348,16 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JToggleButton CHOOSER;
     private javax.swing.JToggleButton ROUND;
     private javax.swing.JToggleButton SQUARE;
+    private javax.swing.JPanel basePanel;
     private javax.swing.JCheckBox checkBoxLisser;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JMenuItem enregistrerMenuItem;
     private javax.swing.JMenuItem enregistrer_sousMenuItem;
-    private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -408,6 +366,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JMenuItem ouvrirMenuItem;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem quitterMenuItem;
+    private javax.swing.JPanel statusBar;
     private javax.swing.JSpinner width;
     // End of variables declaration//GEN-END:variables
 

@@ -11,11 +11,11 @@ import paint.models.Tool;
  *
  * @author remi
  */
-public interface IDrawer {
-    public Color getSlateColor();
-    public Tool getSlateTool();
-    public boolean isSlateSmooth();
-    public void newColorChoosen(Color color);
-    public void newMousePosition(Point point);
-    public int getSlateWidth();
+public abstract interface IDrawer {
+    public abstract Color getSlateColor();
+    public abstract Tool getSlateTool();
+    public abstract boolean isSlateSmooth();
+    public abstract void newColorChoosen(Color color);
+    public abstract void newMousePosition(Point point);
+    public abstract int getSlateWidth();
 }
