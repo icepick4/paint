@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import paint.models.Tool;
@@ -200,6 +201,12 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
         getContentPane().add(statusBar, java.awt.BorderLayout.SOUTH);
 
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+        
         jMenu1.setText("File");
 
         nouveauMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -223,6 +230,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         enregistrerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         enregistrerMenuItem.setText("Enregistrer");
+        enregistrerMenuItem.setEnabled(false);
         enregistrerMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enregistrerMenuItemActionPerformed(evt);
@@ -232,6 +240,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         enregistrer_sousMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         enregistrer_sousMenuItem.setText("Enregistrer sous");
+        enregistrer_sousMenuItem.setEnabled(false);
         enregistrer_sousMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enregistrer_sousMenuItemActionPerformed(evt);
@@ -265,14 +274,17 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     }//GEN-LAST:event_quitterMenuItemActionPerformed
 
     private void nouveauMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nouveauMenuItemActionPerformed
-        //open newdialog.java
-        NewDialog dialog = new NewDialog(this, true);
-        Dimension dimension = dialog.showDialog();
-        //créer un objet slate avec les dimensions
-        //si la dimension est diférente de null
-        if (dimension != null) {
-            this.newSlate(dimension, null);
+        if(this.closeSlate()){
+            //open newdialog.java
+            NewDialog dialog = new NewDialog(this, true);
+            Dimension dimension = dialog.showDialog();
+            //créer un objet slate avec les dimensions
+            //si la dimension est diférente de null
+            if (dimension != null) {
+                this.newSlate(dimension, null);
+            }
         }
+        
     }//GEN-LAST:event_nouveauMenuItemActionPerformed
 
     private void colorPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorPanelMouseClicked
@@ -330,6 +342,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //filter the files, only jpeg, jpg, and png
         FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG & PNG Images", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
         int result = fileChooser.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             //take the path
@@ -341,7 +354,13 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     }//GEN-LAST:event_enregistrerMenuItemActionPerformed
 
     private void enregistrerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
-        saveImage(path);
+        //if the path is null, launch enregistrersous
+        if (this.path == null) {
+            this.enregistrer_sousMenuItem.doClick();
+        }
+        else{
+            saveImage(path);
+        }
     }//GEN-LAST:event_enregistrerMenuItemActionPerformed
 
     private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirMenuItemActionPerformed
@@ -349,6 +368,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG & PNG Images", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             //take the path
@@ -368,9 +388,15 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
-
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.closeWindow();
+    }
 
     private void saveImage(String path){
+        //if the path doesnt end with .png or .jpg, add it
+        if (!path.endsWith(".png") && !path.endsWith(".jpg") && !path.endsWith(".jpeg")) {
+            path += ".png";
+        }
         BufferedImage imagebuf=null;
         try {
             imagebuf = new Robot().createScreenCapture(this.slate.getBounds());
@@ -382,7 +408,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
          try {
             ImageIO.write(imagebuf,"jpeg", new File(path));
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("error on save");
         }
     }
 
@@ -402,8 +428,64 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         slate.addMouseListener(slate);
         slate.addMouseMotionListener(slate);
         basePanel.revalidate();
+        enregistrerMenuItem.setEnabled(true);
+        enregistrer_sousMenuItem.setEnabled(true);
+        
+        //if images != null, set title to the image name
+        if (image != null) {
+            //get image name in the path
+            String name = path.substring(path.lastIndexOf("\\") + 1);
+            this.setTitle("Paint - "+ name);
+        }
     }
 
+    private void closeWindow(){
+        //if slate is null, close the window
+        if (this.slate == null) {
+            System.exit(0);
+        }
+        //check if points list is empty, if not, ask the user if he wants to save the image
+        if (!this.slate.getPoints().isEmpty()) {
+            int result = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer l'image avant de quitter ?", "Enregistrer", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                this.enregistrerMenuItem.doClick();
+                System.exit(0);
+            }
+            else if (result == JOptionPane.NO_OPTION) {
+                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                this.dispose();
+            }
+            else{
+                this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                return;
+            }
+        }
+        else{
+            System.exit(0);
+        }
+    }
+
+    private boolean closeSlate(){
+        //if slate is null, close the window
+        if (this.slate == null) {
+            return true;
+        }
+        //check if points list is empty, if not, ask the user if he wants to save the image
+        if (!this.slate.getPoints().isEmpty()) {
+            int result = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer l'image avant d'en ouvrir une nouvelle ?", "Ouvrir", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                System.out.print("j'enregistre");
+                this.enregistrerMenuItem.doClick();
+            }
+            else if (result == JOptionPane.NO_OPTION) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * @param args the command line arguments
      */

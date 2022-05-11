@@ -42,6 +42,11 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         this.repaint();
     }
 
+    //get points
+    public ArrayList<Paint> getPoints() {
+        return points;
+    }
+
     public void drawImage(BufferedImage image) {
         //draw the image on the panel
         Graphics g = this.getGraphics();
@@ -54,8 +59,6 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         //if image is not null, draw it on the panel
         if(this.image != null) {
             g2d.drawImage(this.image, 0, 0, this.dimension.width, this.dimension.height, null);
-            //add one point to the list
-            this.points.add(new Paint(0, 0, 0, false, Color.BLACK, Tool.ROUND));
         }
         //if its first time, draw the background
         if(this.image == null) {
@@ -82,8 +85,6 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             }
         }
     }
-
-    
 
     @Override
     public void mouseDragged(MouseEvent e) {
