@@ -105,7 +105,6 @@ public class NewDialog extends javax.swing.JDialog {
                     .addComponent(cancelNew))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

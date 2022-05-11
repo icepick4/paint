@@ -8,9 +8,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Component;
+import java.awt.image.BufferedImage;
+import java.awt.Robot;
+import java.awt.Graphics2D;
+import java.awt.AWTException;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import paint.models.Tool;
 
@@ -19,7 +29,8 @@ import paint.models.Tool;
  * @author Rémi JARA
  */
 public class Ardoise extends javax.swing.JFrame implements IDrawer{
-
+    private Slate slate;
+    private String path;
     /**
      * Creates new form Ardoise
      */
@@ -203,17 +214,30 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         ouvrirMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         ouvrirMenuItem.setText("Ouvrir");
-        ouvrirMenuItem.setEnabled(false);
+        ouvrirMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ouvrirMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(ouvrirMenuItem);
 
         enregistrerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         enregistrerMenuItem.setText("Enregistrer");
-        enregistrerMenuItem.setEnabled(false);
+        enregistrerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enregistrerMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(enregistrerMenuItem);
 
         enregistrer_sousMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         enregistrer_sousMenuItem.setText("Enregistrer sous");
         enregistrer_sousMenuItem.setEnabled(false);
+        enregistrer_sousMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enregistrer_sousMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(enregistrer_sousMenuItem);
         jMenu1.add(jSeparator1);
 
@@ -248,14 +272,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         //créer un objet slate avec les dimensions
         //si la dimension est diférente de null
         if (dimension != null) {
-            Slate slate = new Slate(dimension, this);
-            basePanel.setPreferredSize(dimension);
-            //ajouter le slate au jpanel
-            basePanel.add(slate);
-            //mettre à jour la fenêtre
-            slate.addMouseListener(slate);
-            slate.addMouseMotionListener(slate);
-            basePanel.revalidate();
+            this.newSlate(dimension, null);
         }
     }//GEN-LAST:event_nouveauMenuItemActionPerformed
 
@@ -306,6 +323,80 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 component.setEnabled(true);
             }
         }
+    }
+
+    private void enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
+        //create a jfile chooser to save a file, take the path choosen by the user
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //filter the files, only jpeg, jpg, and png
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG & PNG Images", "jpg", "jpeg", "png");
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            //take the path
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            this.path = path;
+            saveImage(path);
+            this.enregistrerMenuItem.setEnabled(true);
+        }
+    }//GEN-LAST:event_enregistrerMenuItemActionPerformed
+
+    private void enregistrerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
+        saveImage(path);
+    }//GEN-LAST:event_enregistrerMenuItemActionPerformed
+
+    private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirMenuItemActionPerformed
+        //create a jfile chooser to open a file, take the path choosen by the user
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG & PNG Images", "jpg", "jpeg", "png");
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            //take the path
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            this.path = path;
+            //create var of the image choosen
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File(path));
+            } catch (IOException ex) {
+                ex.getMessage();
+            }
+            //get size of the image
+            Dimension dimension = new Dimension(image.getWidth(), image.getHeight());
+            //create a slate with the dimension
+            this.newSlate(dimension, image);
+        }
+    }
+
+
+
+    private void saveImage(String path){
+        BufferedImage imagebuf=null;
+        try {
+            imagebuf = new Robot().createScreenCapture(this.slate.getBounds());
+        } catch (AWTException e1) {
+            e1.printStackTrace();
+        }  
+         Graphics2D graphics2D = imagebuf.createGraphics();
+         this.slate.paint(graphics2D);
+         try {
+            ImageIO.write(imagebuf,"jpeg", new File(path));
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+    }
+
+    private void newSlate(Dimension dimension, BufferedImage image){
+        Slate slate = new Slate(dimension, this, image);
+        this.slate = slate;
+        basePanel.setPreferredSize(dimension);
+        //ajouter le slate au jpanel
+        basePanel.add(slate);
+        //mettre à jour la fenêtre
+        slate.addMouseListener(slate);
+        slate.addMouseMotionListener(slate);
+        basePanel.revalidate();
     }
 
     /**

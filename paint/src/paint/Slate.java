@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
@@ -26,8 +27,9 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
     private Dimension dimension;
     private IDrawer drawer;
     private ArrayList<Paint> points;
+    private BufferedImage image;
     
-    public Slate(Dimension dimension, IDrawer drawer) {
+    public Slate(Dimension dimension, IDrawer drawer, BufferedImage image) {
         this.drawer = drawer;
         this.dimension = dimension;
         //set sizes
@@ -35,13 +37,33 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         super.setPreferredSize(dimension);
         //this list contains all the point of the canvas
         this.points = new ArrayList<Paint>();
+        //if image is not null, draw it on the panel
+        this.image = image;
+        this.repaint();
+    }
+
+    public void drawImage(BufferedImage image) {
+        //draw the image on the panel
+        Graphics g = this.getGraphics();
+        g.drawImage(image, 0, 0, this.dimension.width, this.dimension.height, null);
+        g.dispose();
     }
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        //draw a white rectangle
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, this.dimension.width, this.dimension.height);
+        //if image is not null, draw it on the panel
+        if(this.image != null) {
+            g2d.drawImage(this.image, 0, 0, this.dimension.width, this.dimension.height, null);
+            this.image = null;
+            //add one point to the list
+            this.points.add(new Paint(0, 0, 0, false, Color.BLACK, Tool.ROUND));
+            return;
+        }
+        //if its first time, draw the background
+        if(this.points.size() == 0) {
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, this.dimension.width, this.dimension.height);
+        }
         //draw all points in the list
         for (Paint point : this.points) {
             //if smooth, activate anti aliasing
@@ -62,6 +84,8 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             }
         }
     }
+
+    
 
     @Override
     public void mouseDragged(MouseEvent e) {
