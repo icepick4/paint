@@ -16,6 +16,8 @@ public class NewDialog extends javax.swing.JDialog {
      */
     public NewDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        //center the dialog in the center of Ardoise JFrame
+        super.setLocationRelativeTo(parent);
         this.initComponents();
     }
 

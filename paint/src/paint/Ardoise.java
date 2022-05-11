@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -336,7 +337,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
-    private void enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
+    private boolean enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
         //create a jfile chooser to save a file, take the path choosen by the user
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -350,20 +351,28 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             this.path = path;
             saveImage(path);
             this.enregistrerMenuItem.setEnabled(true);
+            return true;
         }
+        return false;
     }//GEN-LAST:event_enregistrerMenuItemActionPerformed
 
-    private void enregistrerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
+    private boolean enregistrerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
         //if the path is null, launch enregistrersous
         if (this.path == null) {
-            this.enregistrer_sousMenuItem.doClick();
+            if(!this.enregistrer_sousMenuItemActionPerformed(null)){
+                return false;
+            }
         }
         else{
             saveImage(path);
         }
+        return true;
     }//GEN-LAST:event_enregistrerMenuItemActionPerformed
 
     private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirMenuItemActionPerformed
+        if(!this.closeSlate()){
+            return;
+        }
         //create a jfile chooser to open a file, take the path choosen by the user
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -475,7 +484,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             int result = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer l'image avant d'en ouvrir une nouvelle ?", "Ouvrir", JOptionPane.YES_NO_CANCEL_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 System.out.print("j'enregistre");
-                this.enregistrerMenuItem.doClick();
+                if(!this.enregistrerMenuItemActionPerformed(null)){
+                    return false;
+                }
             }
             else if (result == JOptionPane.NO_OPTION) {
                 return true;
