@@ -232,7 +232,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         enregistrer_sousMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         enregistrer_sousMenuItem.setText("Enregistrer sous");
-        enregistrer_sousMenuItem.setEnabled(false);
         enregistrer_sousMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enregistrer_sousMenuItemActionPerformed(evt);
@@ -388,6 +387,12 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     }
 
     private void newSlate(Dimension dimension, BufferedImage image){
+        //remove the slate if it exists
+        if (this.slate != null) {
+            this.slate.removeMouseListener(this.slate);
+            this.slate.removeMouseMotionListener(this.slate);
+            this.slate.setVisible(false);
+        }
         Slate slate = new Slate(dimension, this, image);
         this.slate = slate;
         basePanel.setPreferredSize(dimension);

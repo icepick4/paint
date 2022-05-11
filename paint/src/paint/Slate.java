@@ -54,13 +54,11 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         //if image is not null, draw it on the panel
         if(this.image != null) {
             g2d.drawImage(this.image, 0, 0, this.dimension.width, this.dimension.height, null);
-            this.image = null;
             //add one point to the list
             this.points.add(new Paint(0, 0, 0, false, Color.BLACK, Tool.ROUND));
-            return;
         }
         //if its first time, draw the background
-        if(this.points.size() == 0) {
+        if(this.image == null) {
             g2d.setColor(Color.WHITE);
             g2d.fillRect(0, 0, this.dimension.width, this.dimension.height);
         }
@@ -107,6 +105,18 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         boolean found = false;
         //if tool is the chooser, change the color
         if (this.drawer.getSlateTool() == Tool.CHOOSER) {
+            //search the color if image is not null
+            if (this.image != null) {
+                int x = e.getX();
+                int y = e.getY();
+                //get the color at this position
+                Color color = new Color(this.image.getRGB(x, y));
+                //if the color is found, change the color
+                if (this.image.getRGB(x, y) != Color.WHITE.getRGB()) {
+                    this.drawer.newColorChoosen(color);
+                }
+                found = true;
+            }
             //search the point clicked in paints list
             for (Paint point : this.points) {
                 if (point.getX() <= e.getX() && point.getX() + point.getWidth() >= e.getX() && point.getY() <= e.getY() && point.getY() + point.getWidth() >= e.getY()) {
