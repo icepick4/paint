@@ -18,9 +18,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -33,11 +33,16 @@ import paint.models.Tool;
 public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private Slate slate;
     private String path;
+    private Inspecteur inspecteurView;
     /**
      * Creates new form Ardoise
      */
     public Ardoise() {
         this.initComponents();
+    }
+
+    public static JCheckBoxMenuItem getInspecteur(){
+        return Ardoise.inspecteur;
     }
 
     /**
@@ -47,6 +52,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         mainPanel = new javax.swing.JPanel();
         controlPanel = new javax.swing.JPanel();
         colorPanel = new javax.swing.JPanel();
@@ -70,6 +76,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         quitterMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        inspecteur = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Paint");
@@ -207,7 +214,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 formWindowClosing(evt);
             }
         });
-        
+
         jMenu1.setText("File");
 
         nouveauMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -262,7 +269,16 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
-        jMenu2.setEnabled(false);
+
+        inspecteur.setText("Inspecteur");
+        inspecteur.setEnabled(false);
+        inspecteur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inspecteurActionPerformed(evt);
+            }
+        });
+        jMenu2.add(inspecteur);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -285,7 +301,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 this.newSlate(dimension, null);
             }
         }
-        
     }//GEN-LAST:event_nouveauMenuItemActionPerformed
 
     private void colorPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorPanelMouseClicked
@@ -337,7 +352,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
-    private boolean enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
+    private boolean enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {                                                    
         //create a jfile chooser to save a file, take the path choosen by the user
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -354,7 +369,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             return true;
         }
         return false;
-    }//GEN-LAST:event_enregistrerMenuItemActionPerformed
+    }                                                   
 
     private boolean enregistrerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerMenuItemActionPerformed
         //if the path is null, launch enregistrersous
@@ -369,7 +384,20 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         return true;
     }//GEN-LAST:event_enregistrerMenuItemActionPerformed
 
-    private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrirMenuItemActionPerformed
+    private void inspecteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inspecteurActionPerformed
+        //if checked, open inspecteur JFrame
+        if (inspecteur.isSelected()) {
+            Inspecteur inspecteurFrame = new Inspecteur();
+            inspecteurFrame.setVisible(true);
+            this.inspecteurView = inspecteurFrame;
+        }
+        //else close the inspector
+        else{
+            this.inspecteurView.dispose();
+        }
+    }//GEN-LAST:event_inspecteurActionPerformed
+
+    private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                               
         if(!this.closeSlate()){
             return;
         }
@@ -397,7 +425,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         this.closeWindow();
     }
 
@@ -439,6 +467,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         basePanel.revalidate();
         enregistrerMenuItem.setEnabled(true);
         enregistrer_sousMenuItem.setEnabled(true);
+        inspecteur.setEnabled(true);
         
         //if images != null, set title to the image name
         if (image != null) {
@@ -543,6 +572,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JPanel controlPanel;
     private javax.swing.JMenuItem enregistrerMenuItem;
     private javax.swing.JMenuItem enregistrer_sousMenuItem;
+    private static javax.swing.JCheckBoxMenuItem inspecteur;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

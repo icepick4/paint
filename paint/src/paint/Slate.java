@@ -59,8 +59,7 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         //if image is not null, draw it on the panel
         if(this.image != null) {
             g2d.drawImage(this.image, 0, 0, this.dimension.width, this.dimension.height, null);
-        }
-        //if its first time, draw the background
+        }        
         if(this.image == null) {
             g2d.setColor(Color.WHITE);
             g2d.fillRect(0, 0, this.dimension.width, this.dimension.height);
