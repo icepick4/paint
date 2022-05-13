@@ -67,7 +67,6 @@ public class TableModelInspector extends AbstractTableModel{
     public ArrayList<Paint> getPaints() {
         //return only if not null
         return paints == null ? new ArrayList<Paint>() : paints;
-        
     }
 
     public void deletePoint(int row) {
