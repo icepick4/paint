@@ -76,7 +76,11 @@ public class Inspecteur extends javax.swing.JFrame {
         formeLabel.setText("Forme:");
         infos.add(formeLabel);
 
-        comboBoxForme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ROUND", "SQUARE" }));
+        //create a personal model for the comboBox with values Tool.SQUARE, Tool.ROUND
+
+
+        //set the model to the comboBox (with Tool type)
+        comboBoxForme.setModel(new ComboBoxModel());
         infos.add(comboBoxForme);
 
         couleurLabel.setText("Couleur:");
@@ -199,17 +203,10 @@ public class Inspecteur extends javax.swing.JFrame {
 
     public void setVisible(TableModelInspector model){
         this.jTable1.setModel(model);
-        //columns names are Couleur, Forme, Taille, X, Y, Lisse?
-        this.jTable1.getColumnModel().getColumn(0).setHeaderValue("Couleur");
-        this.jTable1.getColumnModel().getColumn(1).setHeaderValue("Forme");
-        this.jTable1.getColumnModel().getColumn(2).setHeaderValue("Taille");
-        this.jTable1.getColumnModel().getColumn(3).setHeaderValue("X");
-        this.jTable1.getColumnModel().getColumn(4).setHeaderValue("Y");
-        this.jTable1.getColumnModel().getColumn(5).setHeaderValue("Lisse?");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboBoxForme;
+    private javax.swing.JComboBox<Tool> comboBoxForme;
     private javax.swing.JLabel couleurLabel;
     private javax.swing.JPanel couleurProperties;
     private javax.swing.JLabel formeLabel;
@@ -230,4 +227,10 @@ public class Inspecteur extends javax.swing.JFrame {
     private javax.swing.JLabel yLabel;
     private javax.swing.JSpinner ySpinner;
     // End of variables declaration//GEN-END:variables
+
+    public class ComboBoxModel extends DefaultComboBoxModel<Tool>{
+        public ComboBoxModel(){
+            super(new Tool[]{Tool.SQUARE, Tool.ROUND});
+        }
+    }
 }

@@ -51,7 +51,6 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
      */
     public void zoom(float factor){
         this.factor = factor;
-        
         // On crée la nouvelle dimension à partir de la dimension de base multiplié par le factor
         Dimension newDimension = new Dimension((int) (this.dimension.width * factor), (int) (this.dimension.height * factor));
         // On modifie la taille du panneau

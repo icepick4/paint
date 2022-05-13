@@ -16,6 +16,7 @@ import paint.models.Paint;
  */
 public class TableModelInspector extends AbstractTableModel{
     private ArrayList<Paint> paints;
+    private final String[] titles = {"Couleur", "Forme", "Taille", "X", "Y", "Lisse?"};
 
     public TableModelInspector(){
         this.paints = new ArrayList<Paint>();
@@ -23,7 +24,7 @@ public class TableModelInspector extends AbstractTableModel{
 
     public void addPaint(Paint paint) {
         paints.add(paint);
-        fireTableRowsInserted(this.paints.size(), this.paints.size());
+        this.fireTableDataChanged();
     }
 
     @Override
@@ -33,7 +34,12 @@ public class TableModelInspector extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return this.titles.length;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        return this.titles[columnIndex];
     }
 
     @Override
