@@ -26,31 +26,51 @@ import paint.models.Tool;
 public class Slate extends javax.swing.JPanel implements MouseMotionListener, MouseListener{
     private Dimension dimension;
     private IDrawer drawer;
-    private ArrayList<Paint> points;
     private BufferedImage image;
+    private TableModelInspector model;
+    private float factor;
     
-    public Slate(Dimension dimension, IDrawer drawer, BufferedImage image) {
+    public Slate(Dimension dimension, IDrawer drawer, BufferedImage image, TableModelInspector model) {
         this.drawer = drawer;
         this.dimension = dimension;
+        this.model = model;
+        this.factor = 1.0f;
         //set sizes
-        super.setSize(dimension);
-        super.setPreferredSize(dimension);
-        //this list contains all the point of the canvas
-        this.points = new ArrayList<Paint>();
+        setSize(dimension);
+        setPreferredSize(dimension);
+        setMinimumSize(dimension);
+        setMaximumSize(dimension);
         //if image is not null, draw it on the panel
         this.image = image;
         this.repaint();
     }
 
-    //get points
-    public ArrayList<Paint> getPoints() {
-        return points;
+    /**
+     * Dé/Zoom le panneau. En réalité c'est ces proportions qui changent et la position et tailles des {@link Paint} changent aussi
+     * @param factor Correspond au facteur de zoom (1.0 étant la taille original, 2.0 la taille est doublée, ...)
+     */
+    public void zoom(float factor){
+        this.factor = factor;
+        
+        // On crée la nouvelle dimension à partir de la dimension de base multiplié par le factor
+        Dimension newDimension = new Dimension((int) (this.dimension.width * factor), (int) (this.dimension.height * factor));
+        // On modifie la taille du panneau
+        setSize(newDimension);
+        setPreferredSize(newDimension);
+        setMinimumSize(newDimension);
+        setMaximumSize(newDimension);
+        
+        // Et on valide sa modification de taille (car dynamiquement, nous sommes obligés de forcer son redimensionnement)
+        revalidate();
+        
+        // Puis on repeint tout le panneau (cela tien compte du fait qu'en ayant augmenté la taille du panneau, les Paint ne sont plus placé au même endroit et ne font plus la même taille)
+        repaint();
     }
 
     public void drawImage(BufferedImage image) {
         //draw the image on the panel
         Graphics g = this.getGraphics();
-        g.drawImage(image, 0, 0, this.dimension.width, this.dimension.height, null);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
     }
 
@@ -58,14 +78,20 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         Graphics2D g2d = (Graphics2D) g;
         //if image is not null, draw it on the panel
         if(this.image != null) {
-            g2d.drawImage(this.image, 0, 0, this.dimension.width, this.dimension.height, null);
+            g2d.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
         }        
         if(this.image == null) {
             g2d.setColor(Color.WHITE);
-            g2d.fillRect(0, 0, this.dimension.width, this.dimension.height);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
         }
+        
         //draw all points in the list
-        for (Paint point : this.points) {
+        for (Paint point : this.model.getPaints()) {
+            int x = (int) ((point.getX() - point.getWidth() / 2) * this.factor);
+            int y = (int) ((point.getY() - point.getWidth() / 2) * this.factor);
+            
+            // Bien entendu si l'on modifie le zoom du panneau, alors la taille d'un point change aussi. C'est pourquoi on calcule la taille relative au zoom à partir de la taille absolue d'un point
+            int size = (int) (point.getWidth() * this.factor);
             //if smooth, activate anti aliasing
             if (point.isSmooth()) {
                 g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
@@ -77,25 +103,26 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             g2d.setColor(point.getColor());
             //if tool is ROUND then draw a circle, if tool is SQUARE then draw a square
             if (point.getTool() == Tool.ROUND) {
-                g2d.fillOval(point.getX(), point.getY(), point.getWidth(), point.getWidth());
+                g2d.fillOval(x, y, size, size);
             }
             else{
-                g2d.fillRect(point.getX(), point.getY(), point.getWidth(), point.getWidth());
+                g2d.fillRect(x, y, size, size);
             }
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX() - this.drawer.getSlateWidth() / 2;
-        int y = e.getY() - this.drawer.getSlateWidth() / 2;
+        int x = (int) (e.getX() / Slate.this.factor);
+        int y = (int) (e.getY() / Slate.this.factor);
         
         //add it to the list
         //if the tool is not chooser then add it to the list
         if (this.drawer.getSlateTool() != Tool.CHOOSER && this.drawer.getSlateTool() != null) {
             //create an object Paint smooth is the value of the checkbox smooth
+            
             Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
-            this.points.add(point);
+            this.model.getPaints().add(point);
         }
         this.repaint();
     }
@@ -118,7 +145,7 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
                 found = true;
             }
             //search the point clicked in paints list
-            for (Paint point : this.points) {
+            for (Paint point : this.model.getPaints()) {
                 if (point.getX() <= e.getX() && point.getX() + point.getWidth() >= e.getX() && point.getY() <= e.getY() && point.getY() + point.getWidth() >= e.getY()) {
                     //if the point is found, change the color
                     this.drawer.newColorChoosen(point.getColor());
@@ -131,11 +158,11 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         }
         else{
             //set x and y in the middle of the point depending on the width
-            int x = e.getX() - this.drawer.getSlateWidth() / 2;
-            int y = e.getY() - this.drawer.getSlateWidth() / 2;
+            int x = (int) (e.getX() / Slate.this.factor);
+            int y = (int) (e.getY() / Slate.this.factor);
             //add a point to the list
             Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
-            this.points.add(point);
+            this.model.getPaints().add(point);
         }
         this.repaint();
     }

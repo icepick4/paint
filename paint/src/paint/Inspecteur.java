@@ -4,12 +4,18 @@
  */
 package paint;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import paint.models.Tool;
+
 /**
  *
  * @author Rémi JARA
  */
 public class Inspecteur extends javax.swing.JFrame {
-
     /**
      * Creates new form Inspecteur
      */
@@ -120,7 +126,7 @@ public class Inspecteur extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(propertiesPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -157,6 +163,11 @@ public class Inspecteur extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                propertiesPanel.setVisible(true);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,44 +192,20 @@ public class Inspecteur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //uncheck the static menuitemcheckbox in ardoise
         Ardoise.getInspecteur().setSelected(false);
-    }//GEN-LAST:event_formWindowClosed
+    }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inspecteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inspecteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inspecteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inspecteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inspecteur().setVisible(true);
-            }
-        });
+    public void setVisible(TableModelInspector model){
+        this.jTable1.setModel(model);
+        //columns names are Couleur, Forme, Taille, X, Y, Lisse?
+        this.jTable1.getColumnModel().getColumn(0).setHeaderValue("Couleur");
+        this.jTable1.getColumnModel().getColumn(1).setHeaderValue("Forme");
+        this.jTable1.getColumnModel().getColumn(2).setHeaderValue("Taille");
+        this.jTable1.getColumnModel().getColumn(3).setHeaderValue("X");
+        this.jTable1.getColumnModel().getColumn(4).setHeaderValue("Y");
+        this.jTable1.getColumnModel().getColumn(5).setHeaderValue("Lisse?");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

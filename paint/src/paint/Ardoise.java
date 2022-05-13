@@ -32,6 +32,7 @@ import paint.models.Tool;
  */
 public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private Slate slate;
+    private TableModelInspector model;
     private String path;
     private Inspecteur inspecteurView;
     /**
@@ -65,6 +66,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         basePanel = new javax.swing.JPanel();
+        zoomPanel = new javax.swing.JPanel();
+        zoomLabel = new javax.swing.JLabel();
+        zoomSlider = new javax.swing.JSlider();
         statusBar = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -104,6 +108,42 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 112, Short.MAX_VALUE)
         );
+
+        zoomLabel.setText("Zoom:");
+        zoomLabel.setEnabled(false);
+
+        zoomSlider.setMinimum(1);
+        zoomSlider.setPaintLabels(true);
+        zoomSlider.setValue(1);
+        zoomSlider.setEnabled(false);
+        zoomSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                zoomSliderStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout zoomPanelLayout = new javax.swing.GroupLayout(zoomPanel);
+        zoomPanel.setLayout(zoomPanelLayout);
+        zoomPanelLayout.setHorizontalGroup(
+            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zoomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(zoomLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        zoomPanelLayout.setVerticalGroup(
+            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zoomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        statusBar.add(zoomPanel, java.awt.BorderLayout.LINE_END);
 
         CHOOSER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aaa.png"))); // NOI18N
         CHOOSER.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +429,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         if (inspecteur.isSelected()) {
             Inspecteur inspecteurFrame = new Inspecteur();
             inspecteurFrame.setVisible(true);
+            inspecteurFrame.setVisible(model);
             this.inspecteurView = inspecteurFrame;
         }
         //else close the inspector
@@ -429,6 +470,15 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         this.closeWindow();
     }
 
+    /**
+     * Lorsque l'utilisateur se sert du {@link JSlider} pour modifier le zoom de l'image
+     * @param evt Correspond à l'évènement reçu
+     */
+    private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_zoomSliderStateChanged
+        if(this.slate != null)
+            this.slate.zoom(zoomSlider.getValue() / 10 + 1);
+    }//GEN-LAST:event_zoomSliderStateChanged
+
     private void saveImage(String path){
         //if the path doesnt end with .png or .jpg, add it
         if (!path.endsWith(".png") && !path.endsWith(".jpg") && !path.endsWith(".jpeg")) {
@@ -456,7 +506,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             this.slate.removeMouseMotionListener(this.slate);
             this.slate.setVisible(false);
         }
-        Slate slate = new Slate(dimension, this, image);
+        TableModelInspector model = new TableModelInspector();
+        this.model = model;
+        Slate slate = new Slate(dimension, this, image, model);
         this.slate = slate;
         basePanel.setPreferredSize(dimension);
         //ajouter le slate au jpanel
@@ -467,6 +519,8 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         basePanel.revalidate();
         enregistrerMenuItem.setEnabled(true);
         enregistrer_sousMenuItem.setEnabled(true);
+        zoomLabel.setEnabled(true);
+        zoomSlider.setEnabled(true);
         inspecteur.setEnabled(true);
         
         //if images != null, set title to the image name
@@ -483,7 +537,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             System.exit(0);
         }
         //check if points list is empty, if not, ask the user if he wants to save the image
-        if (!this.slate.getPoints().isEmpty()) {
+        if (!this.model.getPaints().isEmpty()) {
             int result = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer l'image avant de quitter ?", "Enregistrer", JOptionPane.YES_NO_CANCEL_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 this.enregistrerMenuItem.doClick();
@@ -509,7 +563,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             return true;
         }
         //check if points list is empty, if not, ask the user if he wants to save the image
-        if (!this.slate.getPoints().isEmpty()) {
+        if (!this.model.getPaints().isEmpty()) {
             int result = JOptionPane.showConfirmDialog(null, "Voulez-vous enregistrer l'image avant d'en ouvrir une nouvelle ?", "Ouvrir", JOptionPane.YES_NO_CANCEL_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 System.out.print("j'enregistre");
@@ -587,6 +641,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JMenuItem quitterMenuItem;
     private javax.swing.JPanel statusBar;
     private javax.swing.JSpinner width;
+    private javax.swing.JLabel zoomLabel;
+    private javax.swing.JPanel zoomPanel;
+    private javax.swing.JSlider zoomSlider;
     // End of variables declaration//GEN-END:variables
 
     @Override
