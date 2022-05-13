@@ -4,11 +4,14 @@
  */
 package paint;
 
+import java.awt.Color;
+
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.JColorChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import paint.models.Paint;
 import paint.models.Tool;
 
 /**
@@ -16,6 +19,7 @@ import paint.models.Tool;
  * @author Rémi JARA
  */
 public class Inspecteur extends javax.swing.JFrame {
+    private TableModelInspector model;
     /**
      * Creates new form Inspecteur
      */
@@ -35,12 +39,12 @@ public class Inspecteur extends javax.swing.JFrame {
 
         rightPanel = new javax.swing.JPanel();
         propertiesPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        supprimerPoint = new javax.swing.JButton();
+        modifierPoint = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         infos = new javax.swing.JPanel();
         formeLabel = new javax.swing.JLabel();
-        comboBoxForme = new javax.swing.JComboBox<>();
+        comboBoxForme = new javax.swing.JComboBox<Tool>();
         couleurLabel = new javax.swing.JLabel();
         couleurProperties = new javax.swing.JPanel();
         lisseLabel = new javax.swing.JLabel();
@@ -54,7 +58,7 @@ public class Inspecteur extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -62,24 +66,30 @@ public class Inspecteur extends javax.swing.JFrame {
         });
 
         rightPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 2));
-        rightPanel.setLayout(new javax.swing.BoxLayout(rightPanel, javax.swing.BoxLayout.LINE_AXIS));
+        rightPanel.setLayout(new javax.swing.BoxLayout(rightPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
         propertiesPanel.setPreferredSize(new java.awt.Dimension(211, 358));
 
-        jButton1.setText("Supprimer");
+        supprimerPoint.setText("Supprimer");
+        supprimerPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supprimerPointActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Modifier");
+        modifierPoint.setText("Modifier");
+        modifierPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifierPointActionPerformed(evt);
+            }
+        });
 
-        infos.setLayout(new java.awt.GridLayout(6, 2, 0, 20));
+        infos.setLayout(new java.awt.GridLayout(6, 2, -100, 5));
 
         formeLabel.setText("Forme:");
         infos.add(formeLabel);
 
-        //create a personal model for the comboBox with values Tool.SQUARE, Tool.ROUND
-
-
-        //set the model to the comboBox (with Tool type)
         comboBoxForme.setModel(new ComboBoxModel());
         infos.add(comboBoxForme);
 
@@ -88,12 +98,17 @@ public class Inspecteur extends javax.swing.JFrame {
 
         couleurProperties.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         couleurProperties.setPreferredSize(new java.awt.Dimension(102, 40));
+        couleurProperties.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mouseClickedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout couleurPropertiesLayout = new javax.swing.GroupLayout(couleurProperties);
         couleurProperties.setLayout(couleurPropertiesLayout);
         couleurPropertiesLayout.setHorizontalGroup(
             couleurPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 172, Short.MAX_VALUE)
         );
         couleurPropertiesLayout.setVerticalGroup(
             couleurPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,28 +139,28 @@ public class Inspecteur extends javax.swing.JFrame {
             propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(propertiesPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator1)
                     .addGroup(propertiesPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(supprimerPoint)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(modifierPoint)))
+                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(propertiesPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(infos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(infos, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         propertiesPanelLayout.setVerticalGroup(
             propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, propertiesPanelLayout.createSequentialGroup()
-                .addGap(0, 360, Short.MAX_VALUE)
+                .addGap(0, 344, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(supprimerPoint)
+                    .addComponent(modifierPoint))
                 .addContainerGap())
             .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(propertiesPanelLayout.createSequentialGroup()
@@ -170,6 +185,20 @@ public class Inspecteur extends javax.swing.JFrame {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 propertiesPanel.setVisible(true);
+                //get the selected row index
+                int row = jTable1.getSelectedRow();
+                if(row == -1){
+                    return;
+                }
+                //get the paint in the list at the selected row
+                Paint p = model.getPaints().get(row);
+                //set the selected row data to the properties panel
+                comboBoxForme.setSelectedItem(p.getTool());
+                couleurProperties.setBackground(p.getColor());
+                lisseCheckBox.setSelected(p.isSmooth());
+                tailleSpinner.setValue(p.getWidth());
+                xSpinner.setValue(p.getX());
+                ySpinner.setValue(p.getY());
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -181,16 +210,20 @@ public class Inspecteur extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2))))
         );
 
         pack();
@@ -201,8 +234,40 @@ public class Inspecteur extends javax.swing.JFrame {
         Ardoise.getInspecteur().setSelected(false);
     }//GEN-LAST:event_formWindowClosing
 
+    private void supprimerPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerPointActionPerformed
+        int row = jTable1.getSelectedRow();
+        System.out.print(row);
+        this.model.deletePoint(row);
+        this.model.getSlate().revalidate();
+        this.model.getSlate().repaint();
+    }//GEN-LAST:event_supprimerPointActionPerformed
+
+    private void modifierPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifierPointActionPerformed
+        int row = jTable1.getSelectedRow();
+        //get all infos selected in infos panel : forme, couleur, epaisseur, x, y, lisse?
+        Tool tool = (Tool) this.comboBoxForme.getSelectedItem();
+        Color color = this.couleurProperties.getBackground();
+        boolean lisse = this.lisseCheckBox.isSelected();
+        int taille = (int) this.tailleSpinner.getValue();
+        int x = (int) this.xSpinner.getValue();
+        int y = (int) this.ySpinner.getValue();
+        //create a new Paint object with these infos
+        Paint paint = new Paint(x, y, taille, lisse, color,  tool);
+        this.model.modifPoint(row, paint);
+        //repaint the slate
+        this.model.getSlate().repaint();
+    }//GEN-LAST:event_modifierPointActionPerformed
+
+    private void mouseClickedActionPerformed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClickedActionPerformed
+        //open dialog color chooser
+        Color color = JColorChooser.showDialog(this, "Choose a color", this.couleurProperties.getBackground());
+        //set the color chooser color to the color of the properties panel
+        this.couleurProperties.setBackground(color);
+    }//GEN-LAST:event_mouseClickedActionPerformed
+
     public void setVisible(TableModelInspector model){
         this.jTable1.setModel(model);
+        this.model = model;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -211,15 +276,15 @@ public class Inspecteur extends javax.swing.JFrame {
     private javax.swing.JPanel couleurProperties;
     private javax.swing.JLabel formeLabel;
     private javax.swing.JPanel infos;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JCheckBox lisseCheckBox;
     private javax.swing.JLabel lisseLabel;
+    private javax.swing.JButton modifierPoint;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JPanel rightPanel;
+    private javax.swing.JButton supprimerPoint;
     private javax.swing.JLabel tailleLabel;
     private javax.swing.JSpinner tailleSpinner;
     private javax.swing.JLabel xLabel;

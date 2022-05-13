@@ -17,9 +17,11 @@ import paint.models.Paint;
 public class TableModelInspector extends AbstractTableModel{
     private ArrayList<Paint> paints;
     private final String[] titles = {"Couleur", "Forme", "Taille", "X", "Y", "Lisse?"};
+    private Slate slate;
 
-    public TableModelInspector(){
+    public TableModelInspector(Slate slate){
         this.paints = new ArrayList<Paint>();
+        this.slate = slate;
     }
 
     public void addPaint(Paint paint) {
@@ -66,5 +68,19 @@ public class TableModelInspector extends AbstractTableModel{
         //return only if not null
         return paints == null ? new ArrayList<Paint>() : paints;
         
+    }
+
+    public void deletePoint(int row) {
+        this.paints.remove(row);
+        super.fireTableRowsDeleted(row, row);
+    }
+
+    public void modifPoint(int row, Paint paint) {
+        this.paints.set(row, paint);
+        super.fireTableRowsUpdated(row, row);
+    }
+
+    public Slate getSlate(){
+        return this.slate;
     }
 }

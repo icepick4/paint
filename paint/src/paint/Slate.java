@@ -4,7 +4,6 @@
  */
 package paint;
 
-import java.util.ArrayList;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,10 +29,9 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
     private TableModelInspector model;
     private float factor;
     
-    public Slate(Dimension dimension, IDrawer drawer, BufferedImage image, TableModelInspector model) {
+    public Slate(Dimension dimension, IDrawer drawer, BufferedImage image) {
         this.drawer = drawer;
         this.dimension = dimension;
-        this.model = model;
         this.factor = 1.0f;
         //set sizes
         setSize(dimension);
@@ -43,6 +41,10 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         //if image is not null, draw it on the panel
         this.image = image;
         this.repaint();
+    }
+
+    public void setModel(TableModelInspector model) {
+        this.model = model;
     }
 
     /**

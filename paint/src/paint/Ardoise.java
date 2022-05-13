@@ -506,10 +506,12 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             this.slate.removeMouseMotionListener(this.slate);
             this.slate.setVisible(false);
         }
-        TableModelInspector model = new TableModelInspector();
-        this.model = model;
-        Slate slate = new Slate(dimension, this, image, model);
+        
+        Slate slate = new Slate(dimension, this, image);
         this.slate = slate;
+        TableModelInspector model = new TableModelInspector(this.slate);
+        this.model = model;
+        this.slate.setModel(this.model);
         basePanel.setPreferredSize(dimension);
         //ajouter le slate au jpanel
         basePanel.add(slate);

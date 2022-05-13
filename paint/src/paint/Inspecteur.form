@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -29,18 +29,24 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="rightPanel" min="-2" pref="231" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="rightPanel" min="-2" pref="275" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                  <Component id="rightPanel" min="-2" pref="431" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="rightPanel" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
       </Group>
@@ -58,7 +64,9 @@
         </Property>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
+        <Property name="axis" type="int" value="3"/>
+      </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="propertiesPanel">
           <Properties>
@@ -77,20 +85,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSeparator1" min="-2" pref="173" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jSeparator1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="supprimerPoint" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="modifierPoint" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="12" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="infos" max="32767" attributes="0"/>
+                          <Component id="infos" pref="249" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -99,12 +107,12 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="360" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="344" max="32767" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="supprimerPoint" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="modifierPoint" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -119,15 +127,21 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="supprimerPoint">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Supprimer"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supprimerPointActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="modifierPoint">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modifier"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modifierPointActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
@@ -135,8 +149,9 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                 <Property name="columns" type="int" value="2"/>
+                <Property name="horizontalGap" type="int" value="-100"/>
                 <Property name="rows" type="int" value="6"/>
-                <Property name="verticalGap" type="int" value="20"/>
+                <Property name="verticalGap" type="int" value="5"/>
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="formeLabel">
@@ -146,14 +161,12 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboBoxForme">
                   <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="2">
-                        <StringItem index="0" value="ROUND"/>
-                        <StringItem index="1" value="SQUARE"/>
-                      </StringArray>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new ComboBoxModel()" type="code"/>
                     </Property>
                   </Properties>
                   <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;Tool&gt;()"/>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
@@ -173,11 +186,14 @@
                       <Dimension value="[102, 40]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mouseClickedActionPerformed"/>
+                  </Events>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="172" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -240,7 +256,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;        public void valueChanged(ListSelectionEvent event) {&#xa;            // do some actions here, for example&#xa;            // print first column value from selected row&#xa;            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());&#xa;        }&#xa;    });"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;        public void valueChanged(ListSelectionEvent event) {&#xa;            propertiesPanel.setVisible(true);&#xa;            //get the selected row index&#xa;            int row = jTable1.getSelectedRow();&#xa;            if(row == -1){&#xa;                return;&#xa;            }&#xa;            //get the paint in the list at the selected row&#xa;            Paint p = model.getPaints().get(row);&#xa;            //set the selected row data to the properties panel&#xa;            comboBoxForme.setSelectedItem(p.getTool());&#xa;            couleurProperties.setBackground(p.getColor());&#xa;            lisseCheckBox.setSelected(p.isSmooth());&#xa;            tailleSpinner.setValue(p.getWidth());&#xa;            xSpinner.setValue(p.getX());&#xa;            ySpinner.setValue(p.getY());&#xa;        }&#xa;    });"/>
           </AuxValues>
         </Component>
       </SubComponents>
