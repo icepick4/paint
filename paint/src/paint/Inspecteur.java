@@ -39,9 +39,6 @@ public class Inspecteur extends javax.swing.JFrame {
 
         rightPanel = new javax.swing.JPanel();
         propertiesPanel = new javax.swing.JPanel();
-        supprimerPoint = new javax.swing.JButton();
-        modifierPoint = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         infos = new javax.swing.JPanel();
         formeLabel = new javax.swing.JLabel();
         comboBoxForme = new javax.swing.JComboBox<Tool>();
@@ -55,6 +52,9 @@ public class Inspecteur extends javax.swing.JFrame {
         xSpinner = new javax.swing.JSpinner();
         yLabel = new javax.swing.JLabel();
         ySpinner = new javax.swing.JSpinner();
+        supprimerPoint = new javax.swing.JButton();
+        modifierPoint = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -66,24 +66,12 @@ public class Inspecteur extends javax.swing.JFrame {
         });
 
         rightPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 2));
+        rightPanel.setMaximumSize(new java.awt.Dimension(215, 362));
+        rightPanel.setMinimumSize(new java.awt.Dimension(215, 362));
         rightPanel.setLayout(new javax.swing.BoxLayout(rightPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
         propertiesPanel.setPreferredSize(new java.awt.Dimension(211, 358));
-
-        supprimerPoint.setText("Supprimer");
-        supprimerPoint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supprimerPointActionPerformed(evt);
-            }
-        });
-
-        modifierPoint.setText("Modifier");
-        modifierPoint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modifierPointActionPerformed(evt);
-            }
-        });
 
         infos.setLayout(new java.awt.GridLayout(6, 2, -100, 5));
 
@@ -108,11 +96,11 @@ public class Inspecteur extends javax.swing.JFrame {
         couleurProperties.setLayout(couleurPropertiesLayout);
         couleurPropertiesLayout.setHorizontalGroup(
             couleurPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
+            .addGap(0, 142, Short.MAX_VALUE)
         );
         couleurPropertiesLayout.setVerticalGroup(
             couleurPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 38, Short.MAX_VALUE)
+            .addGap(0, 35, Short.MAX_VALUE)
         );
 
         infos.add(couleurProperties);
@@ -133,45 +121,59 @@ public class Inspecteur extends javax.swing.JFrame {
         infos.add(yLabel);
         infos.add(ySpinner);
 
+        supprimerPoint.setText("Supprimer");
+        supprimerPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supprimerPointActionPerformed(evt);
+            }
+        });
+
+        modifierPoint.setText("Modifier");
+        modifierPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifierPointActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout propertiesPanelLayout = new javax.swing.GroupLayout(propertiesPanel);
         propertiesPanel.setLayout(propertiesPanelLayout);
         propertiesPanelLayout.setHorizontalGroup(
             propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(propertiesPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSeparator1)
                     .addGroup(propertiesPanelLayout.createSequentialGroup()
                         .addComponent(supprimerPoint)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(modifierPoint)))
-                .addContainerGap(531, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(propertiesPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(infos, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                    .addComponent(infos, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         propertiesPanelLayout.setVerticalGroup(
             propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, propertiesPanelLayout.createSequentialGroup()
-                .addGap(0, 233, Short.MAX_VALUE)
+                .addContainerGap(265, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(supprimerPoint)
                     .addComponent(modifierPoint))
-                .addContainerGap())
+                .addGap(97, 97, 97))
             .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(propertiesPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(infos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         rightPanel.add(propertiesPanel);
 
-        getContentPane().add(rightPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(rightPanel, java.awt.BorderLayout.LINE_END);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -205,7 +207,7 @@ public class Inspecteur extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
