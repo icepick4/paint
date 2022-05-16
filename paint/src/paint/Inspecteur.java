@@ -111,6 +111,8 @@ public class Inspecteur extends javax.swing.JFrame {
 
         tailleLabel.setText("Taille:");
         infos.add(tailleLabel);
+
+        tailleSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 1));
         infos.add(tailleSpinner);
 
         xLabel.setText("X:");
@@ -157,7 +159,7 @@ public class Inspecteur extends javax.swing.JFrame {
         propertiesPanelLayout.setVerticalGroup(
             propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, propertiesPanelLayout.createSequentialGroup()
-                .addContainerGap(265, Short.MAX_VALUE)
+                .addGap(265, 265, 265)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
