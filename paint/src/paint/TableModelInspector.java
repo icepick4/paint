@@ -48,17 +48,17 @@ public class TableModelInspector extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                return paints.get(rowIndex).getColor();
+                return this.paints.get(rowIndex).getColor();
             case 1:
-                return paints.get(rowIndex).getTool();
+                return this.paints.get(rowIndex).getTool();
             case 2:
-                return paints.get(rowIndex).getWidth();
+                return this.paints.get(rowIndex).getWidth();
             case 3:
-                return paints.get(rowIndex).getX();
+                return this.paints.get(rowIndex).getX();
             case 4:
-                return paints.get(rowIndex).getY();
+                return this.paints.get(rowIndex).getY();
             case 5:
-                return paints.get(rowIndex).isSmooth();
+                return this.paints.get(rowIndex).isSmooth();
             default:
                 return null;
         }

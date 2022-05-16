@@ -124,6 +124,8 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             
             Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
             this.model.getPaints().add(point);
+            //update the jtable
+            this.model.fireTableDataChanged();
         }
         this.repaint();
     }
@@ -164,6 +166,8 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             //add a point to the list
             Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
             this.model.getPaints().add(point);
+            //update the jtable
+            this.model.fireTableDataChanged();
         }
         this.repaint();
     }
