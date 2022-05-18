@@ -132,6 +132,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         buttonGroup.add(CHOOSER);
         buttonGroup.add(ROUND);
         buttonGroup.add(SQUARE);
+        buttonGroup.add(STRING);
 
         STRING.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/t.png"))); // NOI18N
         STRING.addActionListener(new java.awt.event.ActionListener() {

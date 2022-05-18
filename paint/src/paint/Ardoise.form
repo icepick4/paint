@@ -254,7 +254,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SQUARE.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                SQUAREActionPerformed(evt);&#xa;            }&#xa;        });&#xa;ButtonGroup buttonGroup = new ButtonGroup();&#xa;        buttonGroup.add(CHOOSER);&#xa;        buttonGroup.add(ROUND);&#xa;        buttonGroup.add(SQUARE);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SQUARE.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                SQUAREActionPerformed(evt);&#xa;            }&#xa;        });&#xa;ButtonGroup buttonGroup = new ButtonGroup();&#xa;        buttonGroup.add(CHOOSER);&#xa;        buttonGroup.add(ROUND);&#xa;        buttonGroup.add(SQUARE);&#xa;        buttonGroup.add(STRING);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="STRING">
