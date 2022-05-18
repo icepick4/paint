@@ -35,6 +35,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private TableModelInspector model;
     private String path;
     private Inspecteur inspecteurView;
+    private String string;
     /**
      * Creates new form Ardoise
      */
@@ -60,15 +61,13 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         CHOOSER = new javax.swing.JToggleButton();
         ROUND = new javax.swing.JToggleButton();
         SQUARE = new javax.swing.JToggleButton();
+        STRING = new javax.swing.JToggleButton();
         propertiesPanel = new javax.swing.JPanel();
         width = new javax.swing.JSpinner();
         checkBoxLisser = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         basePanel = new javax.swing.JPanel();
-        zoomPanel = new javax.swing.JPanel();
-        zoomLabel = new javax.swing.JLabel();
-        zoomSlider = new javax.swing.JSlider();
         statusBar = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -109,42 +108,6 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             .addGap(0, 112, Short.MAX_VALUE)
         );
 
-        zoomLabel.setText("Zoom:");
-        zoomLabel.setEnabled(false);
-
-        zoomSlider.setMinimum(1);
-        zoomSlider.setPaintLabels(true);
-        zoomSlider.setValue(1);
-        zoomSlider.setEnabled(false);
-        zoomSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                zoomSliderStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout zoomPanelLayout = new javax.swing.GroupLayout(zoomPanel);
-        zoomPanel.setLayout(zoomPanelLayout);
-        zoomPanelLayout.setHorizontalGroup(
-            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zoomPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(zoomLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        zoomPanelLayout.setVerticalGroup(
-            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zoomPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        statusBar.add(zoomPanel, java.awt.BorderLayout.LINE_END);
-
         CHOOSER.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/aaa.png"))); // NOI18N
         CHOOSER.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +132,15 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         buttonGroup.add(CHOOSER);
         buttonGroup.add(ROUND);
         buttonGroup.add(SQUARE);
+        buttonGroup.add(STRING);
+
+        STRING.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paint/assets/t.png"))); // NOI18N
+        STRING.setText("jToggleButton1");
+        STRING.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                STRINGActionPerformed(evt);
+            }
+        });
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
@@ -209,20 +181,22 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                        .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(controlPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(CHOOSER, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ROUND, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(SQUARE, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
                         .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(CHOOSER)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ROUND)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SQUARE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(STRING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         controlPanelLayout.setVerticalGroup(
@@ -232,12 +206,13 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SQUARE, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(SQUARE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(STRING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ROUND, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHOOSER))
-                .addGap(18, 18, 18)
+                    .addComponent(CHOOSER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
                 .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         getContentPane().add(controlPanel, java.awt.BorderLayout.EAST);
@@ -254,6 +229,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
                 formWindowClosing(evt);
             }
         });
+        zoomPanel = new javax.swing.JPanel();
+        zoomLabel = new javax.swing.JLabel();
+        zoomSlider = new javax.swing.JSlider();
 
         jMenu1.setText("File");
 
@@ -310,6 +288,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         jMenu2.setText("Edit");
 
+        inspecteur.setSelected(true);
         inspecteur.setText("Inspecteur");
         inspecteur.setEnabled(false);
         inspecteur.addActionListener(new java.awt.event.ActionListener() {
@@ -320,6 +299,42 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         jMenu2.add(inspecteur);
 
         jMenuBar1.add(jMenu2);
+
+        zoomLabel.setText("Zoom:");
+        zoomLabel.setEnabled(false);
+
+        zoomSlider.setMinimum(1);
+        zoomSlider.setPaintLabels(true);
+        zoomSlider.setValue(1);
+        zoomSlider.setEnabled(false);
+        zoomSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                zoomSliderStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout zoomPanelLayout = new javax.swing.GroupLayout(zoomPanel);
+        zoomPanel.setLayout(zoomPanelLayout);
+        zoomPanelLayout.setHorizontalGroup(
+            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zoomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(zoomLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        zoomPanelLayout.setVerticalGroup(
+            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zoomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        statusBar.add(zoomPanel, java.awt.BorderLayout.LINE_END);
 
         setJMenuBar(jMenuBar1);
 
@@ -391,6 +406,26 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             }
         }
     }
+
+    private void STRINGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STRINGActionPerformed
+        //for all components in the panel disable them is chooser selected
+        if (CHOOSER.isSelected()) {
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(false);
+            }
+        }
+        else{
+            for (Component component : propertiesPanel.getComponents()) {
+                component.setEnabled(true);
+            }
+        }
+        if(STRING.isSelected()){
+            String m = JOptionPane.showInputDialog("Entrez votre texte");
+            if (m != null) {
+                this.string = m;
+            }
+        }
+    }//GEN-LAST:event_STRINGActionPerformed
 
     private boolean enregistrer_sousMenuItemActionPerformed (java.awt.event.ActionEvent evt) {                                                    
         //create a jfile chooser to save a file, take the path choosen by the user
@@ -622,6 +657,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JToggleButton CHOOSER;
     private javax.swing.JToggleButton ROUND;
     private javax.swing.JToggleButton SQUARE;
+    private javax.swing.JToggleButton STRING;
     private javax.swing.JPanel basePanel;
     private javax.swing.JCheckBox checkBoxLisser;
     private javax.swing.JPanel colorPanel;
@@ -637,15 +673,15 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel zoomLabel;
+    private javax.swing.JPanel zoomPanel;
+    private javax.swing.JSlider zoomSlider;
     private javax.swing.JMenuItem nouveauMenuItem;
     private javax.swing.JMenuItem ouvrirMenuItem;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem quitterMenuItem;
     private javax.swing.JPanel statusBar;
     private javax.swing.JSpinner width;
-    private javax.swing.JLabel zoomLabel;
-    private javax.swing.JPanel zoomPanel;
-    private javax.swing.JSlider zoomSlider;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -669,6 +705,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         } else if (SQUARE.isSelected()) {
             tool = Tool.SQUARE;
         }
+        else if (STRING.isSelected()) {
+            tool = Tool.STRING;
+        }
         return tool;
     }
 
@@ -688,5 +727,10 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
     public void newMousePosition(Point point) {
         //return the mouse position from the slate
         System.out.println(point);
+    }
+
+    @Override
+    public String getString(){
+        return string;
     }
 }

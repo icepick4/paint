@@ -237,7 +237,7 @@ public class Inspecteur extends javax.swing.JFrame {
         int x = (int) this.xSpinner.getValue();
         int y = (int) this.ySpinner.getValue();
         //create a new Paint object with these infos
-        Paint paint = new Paint(x, y, taille, lisse, color,  tool);
+        Paint paint = new Paint(x, y, taille, lisse, color,  tool, "A MODIFIER");
         this.model.modifPoint(row, paint);
         //repaint the slate
         this.model.getSlate().repaint();

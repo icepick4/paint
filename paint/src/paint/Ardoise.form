@@ -4,7 +4,9 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.addWindowListener(new java.awt.event.WindowAdapter() {&#xa;            public void windowClosing(java.awt.event.WindowEvent evt) {&#xa;                formWindowClosing(evt);&#xa;            }&#xa;        });"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuBar()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.addWindowListener(new java.awt.event.WindowAdapter() {&#xa;            public void windowClosing(java.awt.event.WindowEvent evt) {&#xa;                formWindowClosing(evt);&#xa;            }&#xa;        });&#xa;zoomPanel = new javax.swing.JPanel();&#xa;zoomLabel = new javax.swing.JLabel();&#xa;zoomSlider = new javax.swing.JSlider();"/>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="zoomLabel.setText(&quot;Zoom:&quot;);&#xa;        zoomLabel.setEnabled(false);&#xa;&#xa;        zoomSlider.setMinimum(1);&#xa;        zoomSlider.setPaintLabels(true);&#xa;        zoomSlider.setValue(1);&#xa;        zoomSlider.setEnabled(false);&#xa;        zoomSlider.addChangeListener(new javax.swing.event.ChangeListener() {&#xa;            public void stateChanged(javax.swing.event.ChangeEvent evt) {&#xa;                zoomSliderStateChanged(evt);&#xa;            }&#xa;        });&#xa;&#xa;        javax.swing.GroupLayout zoomPanelLayout = new javax.swing.GroupLayout(zoomPanel);&#xa;        zoomPanel.setLayout(zoomPanelLayout);&#xa;        zoomPanelLayout.setHorizontalGroup(&#xa;            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)&#xa;            .addGroup(zoomPanelLayout.createSequentialGroup()&#xa;                .addContainerGap()&#xa;                .addComponent(zoomLabel)&#xa;                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)&#xa;                .addComponent(zoomSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)&#xa;                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))&#xa;        );&#xa;        zoomPanelLayout.setVerticalGroup(&#xa;            zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)&#xa;            .addGroup(zoomPanelLayout.createSequentialGroup()&#xa;                .addContainerGap()&#xa;                .addGroup(zoomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)&#xa;                    .addComponent(zoomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)&#xa;                    .addComponent(zoomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))&#xa;                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))&#xa;        );&#xa;&#xa;        statusBar.add(zoomPanel, java.awt.BorderLayout.LINE_END);"/>
       </AuxValues>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -131,6 +133,9 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private javax.swing.JLabel zoomLabel;&#xa;private javax.swing.JPanel zoomPanel;&#xa;private javax.swing.JSlider zoomSlider;"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="Center"/>
@@ -151,23 +156,24 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                  <Component id="CHOOSER" min="-2" pref="31" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="ROUND" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="SQUARE" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="colorPanel" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="colorPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="propertiesPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="CHOOSER" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="ROUND" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="SQUARE" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="STRING" min="-2" pref="29" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -181,13 +187,14 @@
                   <Component id="colorPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="SQUARE" alignment="0" pref="31" max="32767" attributes="0"/>
-                      <Component id="ROUND" alignment="0" max="32767" attributes="0"/>
-                      <Component id="CHOOSER" min="-2" max="-2" attributes="0"/>
+                      <Component id="SQUARE" max="32767" attributes="0"/>
+                      <Component id="STRING" max="32767" attributes="0"/>
+                      <Component id="ROUND" max="32767" attributes="0"/>
+                      <Component id="CHOOSER" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="propertiesPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -250,6 +257,17 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SQUARE.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                SQUAREActionPerformed(evt);&#xa;            }&#xa;        });&#xa;ButtonGroup buttonGroup = new ButtonGroup();&#xa;        buttonGroup.add(CHOOSER);&#xa;        buttonGroup.add(ROUND);&#xa;        buttonGroup.add(SQUARE);"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="STRING">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/paint/assets/t.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="STRINGActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="propertiesPanel">
           <Properties>

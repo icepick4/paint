@@ -106,8 +106,16 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             if (point.getTool() == Tool.ROUND) {
                 g2d.fillOval(x, y, size, size);
             }
-            else{
+            else if (point.getTool() == Tool.SQUARE) {
                 g2d.fillRect(x, y, size, size);
+            }
+            else if (point.getTool() == Tool.STRING) {
+                //create a new font with the size of the point
+                g2d.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, size));
+                //change x and y to center the text
+                x = x - size;
+                y = y + size / 2;
+                g2d.drawString(point.getString(), x, y);
             }
         }
     }
@@ -122,7 +130,7 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
         if (this.drawer.getSlateTool() != Tool.CHOOSER && this.drawer.getSlateTool() != null) {
             //create an object Paint smooth is the value of the checkbox smooth
             
-            Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
+            Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool(), this.drawer.getString());
             this.model.getPaints().add(point);
             //update the jtable
             this.model.fireTableDataChanged();
@@ -164,7 +172,7 @@ public class Slate extends javax.swing.JPanel implements MouseMotionListener, Mo
             int x = (int) (e.getX() / Slate.this.factor);
             int y = (int) (e.getY() / Slate.this.factor);
             //add a point to the list
-            Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool());
+            Paint point = new Paint(x,y, this.drawer.getSlateWidth(), this.drawer.isSlateSmooth(), this.drawer.getSlateColor(), this.drawer.getSlateTool(), this.drawer.getString());
             this.model.getPaints().add(point);
             //update the jtable
             this.model.fireTableDataChanged();

@@ -15,14 +15,16 @@ public class Paint {
     private int width;
     private boolean smooth;
     private Tool tool;
+    private String string;
 
-    public Paint(int x, int y, int width, boolean smooth, Color color, Tool tool) {
+    public Paint(int x, int y, int width, boolean smooth, Color color, Tool tool, String string) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.smooth = smooth;
         this.color = color;
-        this.tool = tool;  
+        this.tool = tool;
+        this.string = string;
     }
 
     //getters
@@ -49,4 +51,12 @@ public class Paint {
     public boolean isSmooth() {
         return smooth;
     }    
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
 }

@@ -9,5 +9,5 @@ package paint.models;
  * @author Rémi JARA
  */
 public enum Tool {    
-    CHOOSER, ROUND, SQUARE;
+    CHOOSER, ROUND, SQUARE, STRING;
 }

@@ -18,4 +18,5 @@ public abstract interface IDrawer {
     public abstract void newColorChoosen(Color color);
     public abstract void newMousePosition(Point point);
     public abstract int getSlateWidth();
+    public abstract String getString();
 }
