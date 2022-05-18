@@ -52,6 +52,8 @@ public class Inspecteur extends javax.swing.JFrame {
         xSpinner = new javax.swing.JSpinner();
         yLabel = new javax.swing.JLabel();
         ySpinner = new javax.swing.JSpinner();
+        stringLabel = new javax.swing.JLabel();
+        inputString = new javax.swing.JTextField();
         supprimerPoint = new javax.swing.JButton();
         modifierPoint = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -73,12 +75,17 @@ public class Inspecteur extends javax.swing.JFrame {
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
         propertiesPanel.setPreferredSize(new java.awt.Dimension(211, 358));
 
-        infos.setLayout(new java.awt.GridLayout(6, 2, -100, 5));
+        infos.setLayout(new java.awt.GridLayout(7, 2, -100, 5));
 
         formeLabel.setText("Forme:");
         infos.add(formeLabel);
 
         comboBoxForme.setModel(new ComboBoxModel());
+        comboBoxForme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxFormeActionPerformed(evt);
+            }
+        });
         infos.add(comboBoxForme);
 
         couleurLabel.setText("Couleur:");
@@ -100,7 +107,7 @@ public class Inspecteur extends javax.swing.JFrame {
         );
         couleurPropertiesLayout.setVerticalGroup(
             couleurPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
+            .addGap(0, 29, Short.MAX_VALUE)
         );
 
         infos.add(couleurProperties);
@@ -122,6 +129,12 @@ public class Inspecteur extends javax.swing.JFrame {
         yLabel.setText("Y:");
         infos.add(yLabel);
         infos.add(ySpinner);
+
+        stringLabel.setText("Texte:");
+        infos.add(stringLabel);
+
+        inputString.setEnabled(false);
+        infos.add(inputString);
 
         supprimerPoint.setText("Supprimer");
         supprimerPoint.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +218,7 @@ public class Inspecteur extends javax.swing.JFrame {
                 tailleSpinner.setValue(p.getWidth());
                 xSpinner.setValue(p.getX());
                 ySpinner.setValue(p.getY());
+                inputString.setText(p.getString());
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -236,8 +250,9 @@ public class Inspecteur extends javax.swing.JFrame {
         int taille = (int) this.tailleSpinner.getValue();
         int x = (int) this.xSpinner.getValue();
         int y = (int) this.ySpinner.getValue();
+        String string = this.inputString.getText();
         //create a new Paint object with these infos
-        Paint paint = new Paint(x, y, taille, lisse, color,  tool, "A MODIFIER");
+        Paint paint = new Paint(x, y, taille, lisse, color,  tool, string);
         this.model.modifPoint(row, paint);
         //repaint the slate
         this.model.getSlate().repaint();
@@ -250,6 +265,16 @@ public class Inspecteur extends javax.swing.JFrame {
         this.couleurProperties.setBackground(color);
     }//GEN-LAST:event_mouseClickedActionPerformed
 
+    private void comboBoxFormeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxFormeActionPerformed
+        //if the tool is text, enable inputString
+        if(this.comboBoxForme.getSelectedItem().toString().equals("STRING")){
+            this.inputString.setEnabled(true);
+        }
+        else{
+            this.inputString.setEnabled(false);
+        }
+    }//GEN-LAST:event_comboBoxFormeActionPerformed
+
     public void setVisible(TableModelInspector model){
         this.jTable1.setModel(model);
         this.model = model;
@@ -261,6 +286,7 @@ public class Inspecteur extends javax.swing.JFrame {
     private javax.swing.JPanel couleurProperties;
     private javax.swing.JLabel formeLabel;
     private javax.swing.JPanel infos;
+    private javax.swing.JTextField inputString;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
@@ -269,6 +295,7 @@ public class Inspecteur extends javax.swing.JFrame {
     private javax.swing.JButton modifierPoint;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JPanel rightPanel;
+    private javax.swing.JLabel stringLabel;
     private javax.swing.JButton supprimerPoint;
     private javax.swing.JLabel tailleLabel;
     private javax.swing.JSpinner tailleSpinner;
@@ -280,7 +307,7 @@ public class Inspecteur extends javax.swing.JFrame {
 
     public class ComboBoxModel extends DefaultComboBoxModel<Tool>{
         public ComboBoxModel(){
-            super(new Tool[]{Tool.SQUARE, Tool.ROUND});
+            super(new Tool[]{Tool.SQUARE, Tool.ROUND, Tool.STRING});
         }
     }
 }
