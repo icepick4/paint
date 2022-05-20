@@ -24,6 +24,10 @@ public class TableModelInspector extends AbstractTableModel{
         this.slate = slate;
     }
 
+    /**
+     * Add a new paint to the list
+     * @param paint
+     */
     public void addPaint(Paint paint) {
         paints.add(paint);
         this.fireTableDataChanged();
@@ -69,16 +73,29 @@ public class TableModelInspector extends AbstractTableModel{
         return paints == null ? new ArrayList<Paint>() : paints;
     }
 
+    /**
+     * Remove the paint at the given index
+     * @param row
+     */
     public void deletePoint(int row) {
         this.paints.remove(row);
         super.fireTableRowsDeleted(row, row);
     }
 
+    /**
+     * Modify the paint at the given index
+     * @param row
+     * @param paint
+     */
     public void modifPoint(int row, Paint paint) {
         this.paints.set(row, paint);
         super.fireTableRowsUpdated(row, row);
     }
 
+    /**
+     * Get the slate
+     * @return
+     */
     public Slate getSlate(){
         return this.slate;
     }

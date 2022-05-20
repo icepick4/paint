@@ -5,7 +5,7 @@
 package paint.models;
 
 /**
- *
+ * Enumeration of the tools
  * @author Rémi JARA
  */
 public enum Tool {    

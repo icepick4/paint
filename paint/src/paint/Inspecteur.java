@@ -275,6 +275,9 @@ public class Inspecteur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboBoxFormeActionPerformed
 
+    /**
+     * Set the model of the inspector
+     */
     public void setVisible(TableModelInspector model){
         this.jTable1.setModel(model);
         this.model = model;
@@ -305,6 +308,10 @@ public class Inspecteur extends javax.swing.JFrame {
     private javax.swing.JSpinner ySpinner;
     // End of variables declaration//GEN-END:variables
 
+
+    /**
+     * Create the model for the combobox of the inspector
+     */
     public class ComboBoxModel extends DefaultComboBoxModel<Tool>{
         public ComboBoxModel(){
             super(new Tool[]{Tool.SQUARE, Tool.ROUND, Tool.STRING});

@@ -461,7 +461,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         if (inspecteur.isSelected()) {
             Inspecteur inspecteurFrame = new Inspecteur();
             inspecteurFrame.setVisible(true);
-            inspecteurFrame.setVisible(model);
+            inspecteurFrame.setVisible(this.model);
             this.inspecteurView = inspecteurFrame;
         }
         //else close the inspector
@@ -470,6 +470,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }//GEN-LAST:event_inspecteurActionPerformed
 
+    /**
+     * Open an existing image
+     */
     private void ouvrirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                               
         if(!this.closeSlate()){
             return;
@@ -511,6 +514,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
             this.slate.zoom(zoomSlider.getValue() / 10 + 1);
     }//GEN-LAST:event_zoomSliderStateChanged
 
+    /**
+     * Save the image in the path choosen by the user
+     */
     private void saveImage(String path){
         //if the path doesnt end with .png or .jpg, add it
         if (!path.endsWith(".png") && !path.endsWith(".jpg") && !path.endsWith(".jpeg")) {
@@ -531,6 +537,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
+    /**
+     * When the user click on the {@link JMenuItem "Nouveau"}
+     */
     private void newSlate(Dimension dimension, BufferedImage image){
         //remove the slate if it exists
         if (this.slate != null) {
@@ -565,6 +574,9 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
+    /**
+     * Check if the user wants to close the window or not depending on the state of the slate
+     */
     private void closeWindow(){
         //if slate is null, close the window
         if (this.slate == null) {
@@ -591,6 +603,10 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
         }
     }
 
+    /**
+     * Check if the slate is empty, if not, ask the user if he wants to save the image
+     * @return true if the slate is empty, false otherwise
+     */
     private boolean closeSlate(){
         //if slate is null, close the window
         if (this.slate == null) {

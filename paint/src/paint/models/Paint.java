@@ -29,31 +29,31 @@ public class Paint {
 
     //getters
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     public Tool getTool() {
-        return tool;
+        return this.tool;
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public boolean isSmooth() {
-        return smooth;
+        return this.smooth;
     }    
 
     public String getString() {
-        return string;
+        return this.string;
     }
 
     public void setString(String string) {

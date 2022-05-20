@@ -8,7 +8,7 @@ import java.awt.Point;
 
 import paint.models.Tool;
 /**
- *
+ * Interface for the paint
  * @author Rémi JARA
  */
 public abstract interface IDrawer {
