@@ -217,6 +217,7 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
         basePanel.setBackground(new java.awt.Color(102, 102, 102));
         basePanel.setPreferredSize(null);
+        basePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         jScrollPane1.setViewportView(basePanel);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -364,57 +365,29 @@ public class Ardoise extends javax.swing.JFrame implements IDrawer{
 
     private void CHOOSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHOOSERActionPerformed
         //for all components in the panel disable them
-        if (CHOOSER.isSelected()) {
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(false);
-            }
-        }
-        else{
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(true);
-            }
+        for (Component component : propertiesPanel.getComponents()) {
+            component.setEnabled(false);
         }
     }//GEN-LAST:event_CHOOSERActionPerformed
 
     private void ROUNDActionPerformed(java.awt.event.ActionEvent evt) {                                        
         //for all components in the panel disable them
-        if (CHOOSER.isSelected()) {
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(false);
-            }
-        }
-        else{
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(true);
-            }
+        for (Component component : propertiesPanel.getComponents()) {
+            component.setEnabled(true);
         }
     }
 
     private void SQUAREActionPerformed(java.awt.event.ActionEvent evt) {                                        
         //for all components in the panel disable them is chooser selected
-        if (CHOOSER.isSelected()) {
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(false);
-            }
-        }
-        else{
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(true);
-            }
+        for (Component component : propertiesPanel.getComponents()) {
+            component.setEnabled(true);
         }
     }
 
     private void STRINGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STRINGActionPerformed
         //for all components in the panel disable them is chooser selected
-        if (CHOOSER.isSelected()) {
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(false);
-            }
-        }
-        else{
-            for (Component component : propertiesPanel.getComponents()) {
-                component.setEnabled(true);
-            }
+        for (Component component : propertiesPanel.getComponents()) {
+            component.setEnabled(true);
         }
         if(STRING.isSelected()){
             String m = JOptionPane.showInputDialog("Entrez votre texte");

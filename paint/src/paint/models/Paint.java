@@ -24,7 +24,11 @@ public class Paint {
         this.smooth = smooth;
         this.color = color;
         this.tool = tool;
-        this.string = string;
+        if(string == null) {
+            this.string = "Default text";
+        } else {
+            this.string = string;
+        }
     }
 
     //getters
