@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package paint.models;
+
 import java.awt.Color;
+
 /**
  *
  * @author Rémi JARA
@@ -24,14 +26,14 @@ public class Paint {
         this.smooth = smooth;
         this.color = color;
         this.tool = tool;
-        if(string == null) {
+        if (string == null) {
             this.string = "Default text";
-        } else {
+        } else if (tool == Tool.STRING) {
             this.string = string;
         }
     }
 
-    //getters
+    // getters
     public Color getColor() {
         return this.color;
     }
@@ -54,13 +56,9 @@ public class Paint {
 
     public boolean isSmooth() {
         return this.smooth;
-    }    
+    }
 
     public String getString() {
         return this.string;
-    }
-
-    public void setString(String string) {
-        this.string = string;
     }
 }
